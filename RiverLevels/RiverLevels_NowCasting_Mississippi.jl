@@ -1,12 +1,41 @@
+using Pkg
+Pkg.add("ArchGDAL")
+Pkg.add("GeoInterface")
 using ArchGDAL
 using GeoInterface
+
 using Pkg
+Pkg.update("GDAL")
+Pkg.update("GeoInterface")
+Pkg.update("Colors")
+Pkg.update("GPKG")
+Pkg.add("Types")
+Pkg.update("Operations")
+Pkg.update("ArchGDAL")
+Pkg.test("GeoInterface")
+Pkg.test("GDAL")
 Pkg.test("ArchGDAL")
+
+using Pkg
+Pkg.rm(GDAL) # remove GDAL from your Project.toml
+pkg"add ArchGDAL; add GDAL"
 
 sqrt(131)
 
-waterWaysFolder = "J:/Cai_data/Waterways/"
-waterWaysPath = waterWaysFolder * "USwaterways.gdb"
+using ArchGDAL
+
+# Register all known drivers
+GDAL.allregister()
+
+pp = ArchGDAL.read("C:/Users/18033/Documents/CaiData/geospatialFiles/BasinATLAS_Data_v10/BasinATLAS_v10.gdb")
+gg = ArchGDAL.read("C:/Users/18033/Documents/CaiData/geospatialFiles/Waterways.gdb")
+#ArchGDAL.write(pp, "C:/Users/18033/Documents/CaiData/geospatialFiles/BasinATLAS_Data_v10/BasinATLAS_v10_test.gdb")
+
+print(pp)
+print(gg)
+
+waterWaysFolder = "C:/Users/18033/Documents/CaiData/geospatialFiles/BasinATLAS_Data_v10/"#J:/Cai_data/Waterways/"
+waterWaysPath = waterWaysFolder * "BasinATLAS_Data_v10.gdb"#"USwaterways.gdb"
 using ArchGDAL
 ArchGDAL.registerdrivers() do
    ArchGDAL.read(waterWaysPath) do  waterWaysDb
